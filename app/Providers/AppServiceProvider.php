@@ -16,6 +16,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+        $this->app->bind('stripe-provider', fn($app) => $app->make(StripePaymentProvider::class));
+        
         $this->app->when(StripeController::class)
             ->needs(PaymentProviderContract::class)
             ->give(StripePaymentProvider::class);
